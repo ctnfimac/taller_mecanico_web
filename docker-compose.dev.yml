@@ -1,0 +1,31 @@
+services:
+  # Bases de datos a la cual me conectaré desde mi proyecto
+  authdb:
+    image: postgres:15
+    container_name: auth.microservice.db
+    restart: always
+    environment:
+      POSTGRES_DB: authDb
+      POSTGRES_USER: authadmin
+      POSTGRES_PASSWORD: auth123
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./postgres_data_auth:/var/lib/postgresql/data/
+      - ./init-scripts/authdb-init.sql:/docker-entrypoint-initdb.d/authdb-init.sql
+
+
+  # cliente de base de datos si es que no quiero usar la linea de comandos
+  db_client:
+    image: dpage/pgadmin4
+    container_name: taskapp.db.cliente
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - ./pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "80:80"
+
+volumes:
+  postgres_data:
