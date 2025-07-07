@@ -51,3 +51,6 @@ manage.py
 
 # example database
 drf_example
+
+*.sqlite3
+postgres_data_workshop/

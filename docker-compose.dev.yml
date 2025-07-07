@@ -14,6 +14,20 @@ services:
       - ./postgres_data_auth:/var/lib/postgresql/data/
       - ./init-scripts/authdb-init.sql:/docker-entrypoint-initdb.d/authdb-init.sql
 
+  workshopdb:
+    image: postgres:15
+    container_name: workshop.microservice.db
+    restart: always
+    environment:
+      POSTGRES_DB: workshopDb
+      POSTGRES_USER: workshopadmin
+      POSTGRES_PASSWORD: workwhop123
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./postgres_data_workshop:/var/lib/postgresql/data/
+      # - ./init-scripts/workshopdb-init.sql:/docker-entrypoint-initdb.d/workshopdb-init.sql
+
 
   # cliente de base de datos si es que no quiero usar la linea de comandos
   db_client:
