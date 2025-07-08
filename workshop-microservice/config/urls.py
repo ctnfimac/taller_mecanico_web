@@ -20,7 +20,8 @@ from apps.cars import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'cars', views.CarViewSet)
+router.register(r'cars', views.CarViewSet, basename='car')
+router.register(r'workshop/cars', views.WorkshopCarViewSet, basename='workshop')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
