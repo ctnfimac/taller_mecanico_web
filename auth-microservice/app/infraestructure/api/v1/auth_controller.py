@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, status
 from app.application.usecases.token_validator_usecase_impl import TokenValidatorUseCaseImpl
 from app.infraestructure.schemas.auth import LoginResponse, LoginRequest, TokenValidationRequest, TokenValidationResponse
 from sqlalchemy.orm import Session
@@ -23,7 +23,7 @@ def login(data: LoginRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail=str(e))
     
 
-@router_auth_api.post("/validate-token", response_model=TokenValidationResponse)
+@router_auth_api.post("/validate-token", response_model=TokenValidationResponse, status_code=status.HTTP_200_OK)
 def validate_token(request: TokenValidationRequest,  db: Session = Depends(get_db)):
     # Inyección de dependencias
     workshop_repo = WorkShopRepositoryImpl(db)
@@ -40,7 +40,7 @@ def validate_token(request: TokenValidationRequest,  db: Session = Depends(get_d
             message="Token válido"
         )
     else:
-        return TokenValidationResponse(
-            valid=False,
-            message="Token inválido, expirado o usuario no encontrado"
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token inválido, expirado o usuario no encontrado"
         )
