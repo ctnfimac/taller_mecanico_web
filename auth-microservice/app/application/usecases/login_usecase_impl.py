@@ -14,4 +14,4 @@ class LoginUseCaseImpl(AuthUseCase):
         user = self.workshop_repo.find_by_email(email)
         if not user or not verify_password(password, user.password):
             raise Exception("Invalid credentials")
-        return self.jwt_gen.generate(user.email)
+        return self.jwt_gen.generate(user.email, user.id)

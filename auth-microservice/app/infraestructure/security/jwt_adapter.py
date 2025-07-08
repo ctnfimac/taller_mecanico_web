@@ -12,10 +12,11 @@ ALGORITHM = "HS256"
 EXPIRATION_MINUTES = 5
 
 class SimpleJwtGenerator(JwtGenerator):
-    def generate(self, subject: str) -> str:
+    def generate(self, subject: str, workshop_id: int) -> str:
         expire = datetime.now(timezone.utc) + timedelta(minutes=EXPIRATION_MINUTES)
         payload = {
             "sub": subject, 
+            "workshop_id": workshop_id,
             "exp": expire
         }
         return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
