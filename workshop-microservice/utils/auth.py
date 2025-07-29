@@ -17,9 +17,15 @@ def validate_token(token: str):
         return data.get("valid", False), data
     
     if response.status_code == 401:
-        return False, {"message": data.get("detail"), "status_code": status.HTTP_401_UNAUTHORIZED}
+        return False, {
+            "message": data.get("detail"), 
+            "status_code": status.HTTP_401_UNAUTHORIZED
+        }
 
-    return False, {"message": "Error en el sistema", "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR}
+    return False, {
+        "message": "Error en el sistema", 
+        "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR
+    }
 
 
 

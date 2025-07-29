@@ -22,6 +22,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'cars', views.CarViewSet, basename='car')
 router.register(r'workshop/cars', views.WorkshopCarViewSet, basename='workshop')
+router.register(r'search', views.CarByLicencePlateView, basename='searh-car-by-licence-plate'),
 
 urlpatterns = [
     path('admin/', admin.site.urls),
