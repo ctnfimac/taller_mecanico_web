@@ -3,6 +3,7 @@ from app.application.usecases.token_validator_usecase_impl import TokenValidator
 from app.infraestructure.schemas.auth import LoginResponse, LoginRequest, TokenValidationRequest, TokenValidationResponse
 from sqlalchemy.orm import Session
 from app.infraestructure.repository.conection_db import get_db
+from app.infraestructure.security.bcrypt_password_hasher import BcryptPasswordHasher
 from app.infraestructure.security.jwt_adapter import JwtValidatorPortImpl, SimpleJwtGenerator
 from app.application.usecases.login_usecase_impl import LoginUseCaseImpl
 from app.infraestructure.repository.workshop_repository_impl import WorkShopRepositoryImpl
@@ -14,7 +15,8 @@ router_auth_api = APIRouter()
 def login(data: LoginRequest, db: Session = Depends(get_db)):
     usecase = LoginUseCaseImpl(
         workshop_repo=WorkShopRepositoryImpl(db),
-        jwt_gen=SimpleJwtGenerator()
+        jwt_gen=SimpleJwtGenerator(),
+        password_hasher=BcryptPasswordHasher()
     )
     try:
         token = usecase.login(data.email, data.password)
