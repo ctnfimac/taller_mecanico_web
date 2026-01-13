@@ -12,6 +12,7 @@ passlib = {extras = ["bcrypt"], version = "*"}
 fastapi = {extras = ["standard"], version = "*"}
 sqlalchemy = "*"
 psycopg2-binary = "*"
+redis = "==5.0.1"
 
 [dev-packages]
 black = "*"

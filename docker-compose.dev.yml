@@ -27,7 +27,19 @@ services:
     volumes:
       - ./postgres_data_workshop:/var/lib/postgresql/data/
       # - ./init-scripts/workshopdb-init.sql:/docker-entrypoint-initdb.d/workshopdb-init.sql
-
+  
+  # ======================
+  # REDIS (AUTH TOKENS)
+  # ======================
+  redis:
+    image: redis:7-alpine
+    container_name: auth.microservice.redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
 
   # cliente de base de datos si es que no quiero usar la linea de comandos
   db_client:
@@ -43,3 +55,4 @@ services:
 
 volumes:
   postgres_data:
+  redis_data:
